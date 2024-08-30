@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { fetchEpisodes } from '../redux/sliceEpisodes';
 import { AppDispatch, RootState } from '../redux/store';
 import { Characters } from '../types/characters';
@@ -25,7 +25,7 @@ export const Chart = ({ character }: Props) => {
     if (!episodes) return [];
 
     const monthMap = [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
     ];
 
     const appearances = monthMap.reduce<Record<string, number>>((acc, month) => {
@@ -51,23 +51,25 @@ export const Chart = ({ character }: Props) => {
   console.log(characterAppearancesByMonth);
 
   return (
-    <BarChart
-      width={1000}
-      height={310}
-      data={characterAppearancesByMonth}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="month" />
-      <YAxis  label={{ value: 'Número de Aparições', angle: -90, position: 'center',dx: -35, dy: 0  }} /> 
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="Meses do ano" fill={color} />
-    </BarChart>
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart
+        width={1000}
+        height={310}
+        data={characterAppearancesByMonth}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 13,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="month" />
+        <YAxis label={{ value: 'Número de Aparições', angle: -90, position: 'center', dx: -35, dy: 0 }} />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="Meses do ano" fill={color} />
+      </BarChart>
+    </ResponsiveContainer>
   );
 }
